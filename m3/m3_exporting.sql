@@ -1,6 +1,8 @@
--- Clip 3.5 — Exporting Results
+-- ============================================================
+-- Module 3 | Clip 3.5 — Exporting Results
 -- Demo file: m3_exporting.sql
--- Dataset: data/users.csv, data/posts.csv, data/tags.csv
+-- Dataset:   data/users.csv, data/posts.csv, data/tags.csv
+-- ============================================================
 
 
 -- Query 1 — COPY TO CSV
@@ -20,6 +22,7 @@ COPY (
 TO 'output/top_users.csv' (FORMAT CSV, HEADER TRUE);
 
 SELECT * FROM 'output/top_users.csv' LIMIT 5;
+-- Expected: Jon Skeet tops list — Rep 1389256, ProfileViews 176163
 
 
 -- Query 2 — COPY TO Parquet
@@ -41,6 +44,7 @@ TO 'output/questions.parquet' (FORMAT PARQUET);
 SELECT PostId, Title, Score, ViewCount
 FROM 'output/questions.parquet'
 LIMIT 5;
+-- Expected: Score and ViewCount read back as integers (schema preserved in file)
 
 
 -- Query 3 — COPY TO JSON
@@ -55,3 +59,4 @@ COPY (
 TO 'output/top_tags.json' (FORMAT JSON);
 
 SELECT * FROM 'output/top_tags.json' LIMIT 5;
+-- Expected: javascript=2479947, php=1456271, html=1167742, css=787138, c#=632905
