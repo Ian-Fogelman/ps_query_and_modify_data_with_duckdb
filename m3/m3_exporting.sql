@@ -56,7 +56,17 @@ COPY (
     ORDER BY CAST(Count AS INTEGER) DESC
     LIMIT 20
 )
-TO 'top_tags.json' (FORMAT JSON);
+TO 'top_tags.json' (FORMAT JSON, ARRAY true);
 
 SELECT * FROM 'output/top_tags.json' LIMIT 5;
 -- Expected: javascript=2479947, php=1456271, html=1167742, css=787138, c#=632905
+
+SELECT to_json(t) AS json
+FROM (
+    SELECT
+        TagName,
+        CAST(Count AS INTEGER) AS PostCount
+    FROM 'data/tags.csv'
+    ORDER BY PostCount DESC
+    LIMIT 20
+) t;
